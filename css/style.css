@@ -84,6 +84,7 @@ fieldset label {
   width: 90%;
   margin: 0 auto;
   padding-top: 1.5em;
+  border-bottom: 3px solid rgba(100,100,100,.5);
 }
 
 .card li {
@@ -135,6 +136,7 @@ fieldset label {
   background-color: #fefac0;
   border: 2px solid black;
   height: 500px;
+  overflow: auto;
 }
 
 #song-adder form {
