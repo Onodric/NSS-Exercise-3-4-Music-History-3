@@ -1,3 +1,5 @@
+/* GENERAL ****************************************** */
+
 body {
   width: 75%;
   margin: 0 auto;
@@ -9,11 +11,6 @@ header {
   margin: 1em 0;
   padding: .5em .5em .5em 1em;
   font-weight: 600;
-}
-
-.selected {
-  text-decoration: none;
-  color: black;
 }
 
 ul {
@@ -30,14 +27,6 @@ li {
 
 li:last-child {
   border-right: none;
-}
-
-.card li {
-  padding: 0 1em 0 1em;
-}
-
-.card li:first-child {
-  padding: 0 1em 0 .25em;
 }
 
 h2 {
@@ -62,14 +51,48 @@ aside select {
 }
 
 fieldset {
+  padding-left: 0;
   border: none;
 }
 
 fieldset label {
-  margin-left: .25em;
   display: inline-block;
   width: 36%;
   font-weight: normal;
+}
+
+/* CLASSES ****************************************** */
+
+.song-title {
+  display: inline-block;
+}
+
+.duration {
+  float: right;
+}
+
+.selected {
+  text-decoration: none;
+  color: black;
+}
+
+.hidden{
+  display: none;
+}
+
+.card {
+  width: 90%;
+  margin: 0 auto;
+  padding-top: 1.5em;
+  border-bottom: 3px solid rgba(100,100,100,.5);
+}
+
+.card li {
+  padding: 0 1em 0 1em;
+}
+
+.card li:first-child {
+  padding: 0 1em 0 .25em;
 }
 
 .sidebar {
@@ -84,6 +107,8 @@ fieldset label {
   margin: .5em 15%;
 }
 
+/* IDs ********************************************** */
+
 #chooser {
   width: 23.5%;
   float: left;
@@ -92,23 +117,48 @@ fieldset label {
   height: 500px;
 }
 
-/*#chooser label {
-  display: block;
-}*/
+#song-adder {
+  width: 60%;
+  margin: auto;
+}
 
-#song-cards {
+#user-profile {
+  background: #131f16;
+  color: #d5d2d8;
+  width: 80%;
+  padding: 1em;
+  margin: auto;
+}
+
+#view-songs {
   width: 74%;
   float: right;
   background-color: #fefac0;
   border: 2px solid black;
   height: 500px;
+  overflow: auto;
 }
 
-.card {
+#song-adder form {
   width: 90%;
-  margin: 0 auto;
-  padding-top: 1.5em;
+  margin: 1em auto;
+  font-size: 1.4em;
 }
+
+#song-adder label {
+  margin-right: 1em;
+}
+
+#song-adder input,
+#song-adder select,
+#song-adder button {
+  padding: .1em;
+  font-size: 1.1em;
+  width: 95%;
+  border-radius: .25em;
+  margin: 2.5%;
+}
+
 
 /* sidebar-range slider****************************** */
 
