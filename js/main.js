@@ -1,7 +1,6 @@
 
 // 8. When the user clicks on "List Music" in the navigation bar, the *Add Music View* should be hidden, and the *List Music View* should be shown ([see example wireframe](https://moqups.com/chortlehoort/1E8LJX7r/p:a8d99d401)).
 document.getElementById("viewSongs").addEventListener("click", function(){
-  console.log("Viewer: ", event.target);
   event.target.parentElement.parentElement.children[0].children[0].classList.remove("selected");
   event.target.parentElement.parentElement.children[1].children[0].classList.remove("selected");
   event.target.parentElement.parentElement.children[2].children[0].classList.remove("selected");
@@ -16,7 +15,6 @@ document.getElementById("viewSongs").addEventListener("click", function(){
 
 // 7. When the user clicks on "Add Music" in the navigation bar, the *List Music View* should be hidden, and the *Add Music View* should be shown ([see example wireframe](https://moqups.com/chortlehoort/1E8LJX7r/p:a0cf17f7b)).
 document.getElementById("addSongs").addEventListener("click", function(){
-  console.log("Adder: ", event.target);
   event.target.parentElement.parentElement.children[0].children[0].classList.remove("selected");
   event.target.parentElement.parentElement.children[1].children[0].classList.remove("selected");
   event.target.parentElement.parentElement.children[2].children[0].classList.remove("selected");
@@ -31,7 +29,6 @@ document.getElementById("addSongs").addEventListener("click", function(){
 });
 
 document.getElementById("userProfile").addEventListener("click", function(){
-  console.log("Profile: ", event.target);
   event.target.parentElement.parentElement.children[0].children[0].classList.remove("selected");
   event.target.parentElement.parentElement.children[1].children[0].classList.remove("selected");
   event.target.parentElement.parentElement.children[2].children[0].classList.remove("selected");
@@ -47,67 +44,123 @@ document.getElementById("userProfile").addEventListener("click", function(){
 
 // 9. Once the user fills out the song form and clicks the add button, you should collect all values from the input fields, add the song to your array of songs, and update the song list in the DOM.
 var insertPlace = document.getElementById("view-songs");
-var newSong = '';
+var songList = '';
 
 document.getElementById("add-btn").addEventListener("click", function(){
 // SAMPLE CARD FOLLOWS
   event.preventDefault();
-  console.log("Current innerHTML: ", insertPlace.innerHTML);
-  newSong = '<article class="card"><h2 class="song-title">'
-  newSong += document.getElementById("add-title").value;
-  newSong += '</h2><h5 class="duration">';
-  newSong += document.getElementById("add-duration").value;
-  newSong += '</h5><ul><li class="descriptor">';
-  newSong += document.getElementById("add-artist").value;
-  newSong += '</li><li class="descriptor">';
-  newSong += document.getElementById("add-album").value;
-  newSong += '</li><li class="descriptor">';
-  newSong += document.getElementById("add-genre").value;
-  newSong += '</li></ul></article>';
-  console.log("newSong String: ", newSong);
-  console.log("Going to: ", insertPlace);
-  insertPlace.innerHTML += newSong;
+  var newSong = {};
+  // newSong = '<article class="card"><h2 class="song-title">'
+  newSong.title = document.getElementById("add-title").value;
+  // newSong += '</h2><h5 class="duration">';
+  newSong.duration = document.getElementById("add-duration").value;
+  // newSong += '</h5><ul><li class="descriptor">';
+  newSong.artist = document.getElementById("add-artist").value;
+  // newSong += '</li><li class="descriptor">';
+  newSong.album = document.getElementById("add-album").value;
+  // newSong += '</li><li class="descriptor">';
+  newSong.genre = document.getElementById("add-genre").value;
+  // newSong += '</li></ul></article>';
+  originalSongList.push(newSong);
+  filterThing.addAlbum(newSong);
+  filterThing.addArtist(newSong);
+  popSongCard(originalSongList);
 });
 
 // Now populate the list and with these songs + more
+function popSongCard(array){
+  songList = '';
+  insertPlace.innerHTML = '';
+  for(let i = 0; i < array.length; i++){
+    songList = '<article class="card"><h2 class="song-title">'
+    songList += array[i].title;
+    songList += '</h2><h5 class="duration">';
+    songList += array[i].duration;
+    songList += '</h5><ul><li class="descriptor">';
+    songList += array[i].artist;
+    songList += '</li><li class="descriptor">';
+    songList += array[i].album;
+    songList += '</li><li class="descriptor">';
+    songList += array[i].genre;
+    songList += '</li></ul></article>';
+    insertPlace.innerHTML += songList;
+  };
+}
 
-/*
-<article class="card">
-  <h2 class="song-title">You Enjoy Myself</h2>
-  <h5 class="duration">Duration</h5>
-  <ul>
-      <li class="descriptor">Phish</li>
-      <li class="descriptor">Junta</li>
-      <li class="descriptor">Jazz</li>
-  </ul>      
-</article>
-<article class="card">
-  <h2 class="song-title">Verbal</h2>
-  <h5 class="duration">Duration</h5>
-  <ul>
-      <li class="descriptor">Amon Tobin</li>
-      <li class="descriptor">Out From Out Where</li>
-      <li class="descriptor">Jazz</li>
-  </ul>      
-</article>
-<article class="card">
-  <h2 class="song-title">Taxman</h2>
-  <h5 class="duration">Duration</h5>
-  <ul>
-      <li class="descriptor">The Beatles</li>
-      <li class="descriptor">Revolver</li>
-      <li class="descriptor">Rock</li>
-  </ul>      
-</article>
-<article class="card">
-  <h2 class="song-title">Whatcha Want</h2>
-  <h5 class="duration">Duration</h5>
-  <ul>
-      <li class="descriptor">Beastie Boys</li>
-      <li class="descriptor">Check Your Head</li>
-      <li class="descriptor">Hip-Hop</li>
-  </ul>      
-</article>
-*/
+popSongCard(originalSongList);
 
 // And now populate the sidebar filters appropriately
+// BREAK THIS UP! 
+// ONE RETURN DAMNIT
+
+function popSidebar(arrayOfObjects){
+  var tempAlbum = [];
+  var tempArtist = [];
+  for (let i = 0; i < arrayOfObjects.length; i++){
+    if(!tempAlbum.includes(arrayOfObjects[i].album)){
+      tempAlbum.push(arrayOfObjects[i].album);
+    };
+    if(!tempArtist.includes(arrayOfObjects[i].artist)){
+    tempArtist.push(arrayOfObjects[i].artist);
+    };
+  };
+  var albumPlace = document.getElementById("album");
+  var artistPlace = document.getElementById("artist");
+  for (let i = 0; i < tempAlbum.length; i++){
+
+  };
+}
+/*
+as an iife(s): It will return an object of get/set album and artist.
+  populate tempalbum (addAlbum)
+    this has a qualifier
+  populate tempartist (addArtist)
+    this has a qualifier
+  populate selectlist
+    using internal tempArtist tempAlbum
+  check on filters using get methods of the object
+*/
+
+var filterThing = (function(){
+
+  var albumList = function(){
+    var tempAlbum = [];
+    for (let i = 0; i < originalSongList.length; i++){
+      if(!tempAlbum.includes(originalSongList[i].album)){
+        tempAlbum.push(originalSongList[i].album);
+      };
+    };
+    return tempAlbum;
+  };
+
+  var artistList = function(){
+    var tempArtist = [];
+    for (let i = 0; i < originalSongList.length; i++){
+      if(!tempArtist.includes(originalSongList[i].album)){
+        tempArtist.push(originalSongList[i].album);
+      };
+    };
+    return tempArtist;
+  };
+
+  return {
+    getAlbumList: function(){
+      return albumList;
+    },
+    addAlbum: function (obj) {
+      if(!albumList.includes(obj.album)){
+        albumList.push(obj.album);
+      };
+      return albumList;
+    },
+    getArtistList: function(){
+      return artistList;
+    },
+    addArtist: function (obj) {
+      if(!artistList.includes(obj.album)){
+        artistList.push(obj.album);
+      };
+      return artistList;
+    }
+  }
+})();
